@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RPS-Multiplayer</title>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-database.js"></script>
+</head>
+<body>
+
+    <div id="player1">Player 1: Waiting to connect...</div>
+    <div class="score">
+        Wins: <span id="player1-wins">0</span>
+        Losses: <span id="player1-losses">0</span>
+    </div>
+    <div id="player2">Player 2: Waiting to connect...</div>
+    <div class="score">
+        Wins: <span id="player2-wins">0</span>
+        Losses: <span id="player2-losses">0</span>
+    </div>
+    <div class="game-buttons">
+        <button value="r">Rock</button value="r">
+        <button value="p">Paper</button value="r">
+        <button value="s">Scissors</button value="r">
+    </div>
+    <div id="game-result"></div>
+    <div id="chat"></div>
+    <input type="text" name="" id="msg-input">
+    <button id="msg-button">Send</button>
+    <p>Connections: <span id="connections"></span></p>
+    <button id="restart-button">Restart</button>
+    
+    
+    <script src="assets/javascript/app.js"></script>
+
+</body>
+</html>
