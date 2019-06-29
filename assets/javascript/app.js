@@ -100,14 +100,9 @@ function playerDisconnect(data){
         //show button restart
         $restartButton.css("display","block");
 
-        if(playerName == "player1"){
-            $player1.text("Player 1: Waiting to connect...");
-        }
-        else{
-            $player2.text("Player 2: Waiting to connect...");
-        }
-
-
+        playerName == "player1";
+        $player1.text("Player 1: YOU!");
+        $player2.text("Player 2: Waiting to connect...");
 
     }
 }
@@ -194,8 +189,8 @@ function scoreChanges(snapshot) {
         $player2wins.text(player2.wins);
         $player2losses.text(player2.losses);
     
-        $player1.text("Player1: "+player1.id);
-        $player2.text("Player2: "+player2.id);
+        // $player1.text("Player1: "+player1.id);
+        // $player2.text("Player2: "+player2.id);
     
         //if both players played
         if(player1.choice != "" && player2.choice != ""){
