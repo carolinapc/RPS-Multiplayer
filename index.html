@@ -12,33 +12,82 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
+    <!-- Custom style -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-database.js"></script>
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/113cd923d0.js"></script>    
 </head>
 <body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center">Rock Paper Scissors Game</h1>
+        </div>
 
-    <div id="player1">Player 1: Waiting to connect...</div>
-    <div class="score">
-        Wins: <span id="player1-wins">0</span>
-        Losses: <span id="player1-losses">0</span>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card card-default">
+                    <div id="player1" class="card-header">
+                        Player 1: Waiting to connect...
+                    </div>
+                    <div class="card-body score">
+                        Wins: <span id="player1-wins">0</span>
+                        Losses: <span id="player1-losses">0</span>
+                        Ties: <span class="ties">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card card-default">
+                    <div id="player2" class="card-header">
+                        Player 2: Waiting to connect...
+                    </div>
+                    <div class="card-body score">
+                        Wins: <span id="player2-wins">0</span>
+                        Losses: <span id="player2-losses">0</span>
+                        Ties: <span class="ties">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card card-default">
+                    <div class="card-header">Game</div>
+                    <div class="card-body">
+                        <div id="game-result"></div>
+                        <div class="game-buttons">
+                            <button value="r" class="btn btn-primary"><i class="fas fa-hand-rock"></i></button>
+                            <button value="p" class="btn btn-primary"><i class="fas fa-hand-paper"></i></button>
+                            <button value="s" class="btn btn-primary"><i class="fas fa-hand-scissors"></i></button>
+                        </div>
+                        <button id="restart-button" class="btn btn-primary">Restart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="card card-default">
+                <div class="card-header">
+                  Chat
+                </div>
+                <div class="card-body">
+                    <div id="chat" class="overflow-auto"></div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="msg-input" class="form-control"  aria-label="Recipient's username" aria-describedby="msg-button">
+                        <div class="input-group-append">
+                            <button id="msg-button" class="btn btn-outline-secondary" type="button">Send</button>
+                        </div>
+                    </div>                    
+                </div>
+              </div>
+            </div>
+          </div>
+      
     </div>
-    <div id="player2">Player 2: Waiting to connect...</div>
-    <div class="score">
-        Wins: <span id="player2-wins">0</span>
-        Losses: <span id="player2-losses">0</span>
-    </div>
-    <div class="game-buttons">
-        <button value="r">Rock</button value="r">
-        <button value="p">Paper</button value="r">
-        <button value="s">Scissors</button value="r">
-    </div>
-    <div id="game-result"></div>
-    <div id="chat"></div>
-    <input type="text" name="" id="msg-input">
-    <button id="msg-button">Send</button>
-    <p>Connections: <span id="connections"></span></p>
-    <button id="restart-button">Restart</button>
     
     
     <script src="assets/javascript/app.js"></script>
