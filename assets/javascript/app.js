@@ -48,6 +48,7 @@ var $player1wins = $("#player1-wins");
 var $player2wins = $("#player2-wins");
 var $player1losses = $("#player1-losses");
 var $player2losses = $("#player2-losses");
+var $gameTies = $(".ties");
 var $gameButtons = $(".game-buttons");
 var $gameResult = $("#game-result");
 var $msgInput = $("#msg-input");
@@ -81,24 +82,20 @@ function playerDisconnect(data){
     
     //if the user disconnected was playing on the same game of the current player
     if(gameKey === gameDisconnected){
-        //reset game status
-        gameKey = "waiting";
-        started = false;
 
         //remove the game disconnected
         gamesRef.child(gameDisconnected).remove();
         //reset gameKey
-        connectionsRef.child(player).set(gameKey);
-
+        connectionsRef.child(player).remove();
+        
         //alert the user
-        alert("The other player has disconnected! Please wait for another player!");
-
-        //disable chat
-        $msgInput.attr("disabled","true");
-        $msgButton.attr("disabled","true");
-
-        //show button restart
+        alert("The other player has disconnected! Please click on restart button and wait for another player.");
+        
+        //show restart button
         $restartButton.css("display","block");
+        $gameButtons.css("display","none");
+        $msgInput.attr("disabeld","true");
+        $msgButton.attr("disabled","true");
 
         playerName == "player1";
         $player1.text("Player 1: YOU!");
@@ -110,8 +107,6 @@ function playerDisconnect(data){
 function connectPlayers(snapshot){
     
     var numPlayers = snapshot.numChildren();
-
-    $("#connections").text(numPlayers);
 
     if(numPlayers % 2 === 0){
         //new game
@@ -132,8 +127,9 @@ function connectPlayers(snapshot){
 
             $player2.text("Player 2: YOU!");
             $playerName = "player2";
+            $gameButtons.css("display","block");
 
-            $player1.text("Player 1: Your Oponent!");
+            $player1.text("Player 1: Your Opponent!");
         }
         else{
             $player2.text("Player 2: YOU!");
@@ -188,9 +184,20 @@ function scoreChanges(snapshot) {
         $player1losses.text(player1.losses);
         $player2wins.text(player2.wins);
         $player2losses.text(player2.losses);
+        $gameTies.text(game.score.ties);
     
-        // $player1.text("Player1: "+player1.id);
-        // $player2.text("Player2: "+player2.id);
+        if(player1.id == player){
+            playerName = "player1";
+            $player1.text("Player 1: YOU!");
+            $player2.text("Player 2: Your Opponent");
+        }
+        else{
+            playerName = "player2";
+            $player1.text("Player 1: Your Opponent");
+            $player2.text("Player 2: YOU!");
+        }
+        
+        
     
         //if both players played
         if(player1.choice != "" && player2.choice != ""){
@@ -227,9 +234,20 @@ function scoreChanges(snapshot) {
             $gameButtons.css("display","block");
             
             //updata database
-            gamesRef.child(gameKey+"/score/player1").set(game.score.player1);
-            gamesRef.child(gameKey+"/score/player2").set(game.score.player2);
-            gamesRef.child(gameKey+"/score/ties").set(game.score.ties);
+            gamesRef.child(gameKey+"/score").set(game.score);
+            
+        }
+        else if(player1.choice != ""){
+            $gameResult.empty();
+            $gameResult.append($("<p>").text("Waiting for the player 2 choosing..."));
+            if(playerName == "player2")
+                $gameButtons.css("display","block");
+        }
+        else if(player2.choice != ""){
+            $gameResult.empty();
+            $gameResult.append($("<p>").text("Waiting for the player 1 choosing..."));
+            if(playerName == "player1")
+                $gameButtons.css("display","block");
         }
     }
 
@@ -258,19 +276,15 @@ function messagesChanges(data){
 function play(){
 
     var choice = $(this).val();
-    var refPlayer;
-
-    if(game.score.player1.id == player){
-        refPlayer = "player1";
-    }
-    else{
-        refPlayer = "player2";
-    }
 
     $gameButtons.css("display","none");
 
-    gamesRef.child(gameKey+"/score/"+refPlayer+"/choice").set(choice);
+    gamesRef.child(gameKey+"/score/"+playerName+"/choice").set(choice);
     
+}
+
+function restart(){
+    location.reload();
 }
 
 function sendMessage(){
@@ -310,6 +324,8 @@ $msgInput.keypress(event => {
         sendMessage();
     }
 });
+
+$restartButton.click(restart);
 
 
     

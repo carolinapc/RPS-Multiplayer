@@ -1,0 +1,16 @@
+.game-buttons button{
+    font-size: 40px; 
+    border-radius: 5px;
+    width: 80px;
+    height: auto;
+}
+
+#chat, #game-result{
+    width: 100%;
+    height: 300px;
+    border: 1px solid #c1c1c1;
+}
+
+#restart-button{
+    display: none;
+}
