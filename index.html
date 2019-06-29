@@ -25,71 +25,79 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <h1 class="text-center">Rock Paper Scissors Game</h1>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <div class="card card-default">
-                    <div id="player1" class="card-header">
-                        Player 1: Waiting to connect...
+                    <div class="card-header">
+                        Score
                     </div>
                     <div class="card-body score">
-                        Wins: <span id="player1-wins">0</span>
-                        Losses: <span id="player1-losses">0</span>
-                        Ties: <span class="ties">0</span>
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>Wins</th>
+                                <th>Losses</th>
+                                <th>Ties</th>
+                            </tr>
+                            <tr>
+                                <td><span id="player1">Player 1: Waiting to connect...</span></td>
+                                <td><span id="player1-wins">0</span></td>
+                                <td><span id="player1-losses">0</span></td>
+                                <td rowspan="2"><span id="ties">0</span></td>
+                            </tr>
+                            <tr>
+                                <td><span id="player2" class="blink">Player 2: Waiting to connect...</span></td>
+                                <td><span id="player2-wins">0</span></td>
+                                <td><span id="player2-losses">0</span></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card card-default">
-                    <div id="player2" class="card-header">
-                        Player 2: Waiting to connect...
-                    </div>
-                    <div class="card-body score">
-                        Wins: <span id="player2-wins">0</span>
-                        Losses: <span id="player2-losses">0</span>
-                        Ties: <span class="ties">0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
+        
                 <div class="card card-default">
                     <div class="card-header">Game</div>
                     <div class="card-body">
                         <div id="game-result"></div>
-                        <div class="game-buttons">
-                            <button value="r" class="btn btn-primary"><i class="fas fa-hand-rock"></i></button>
-                            <button value="p" class="btn btn-primary"><i class="fas fa-hand-paper"></i></button>
-                            <button value="s" class="btn btn-primary"><i class="fas fa-hand-scissors"></i></button>
+                        <div class="text-center pt-1">
+                            <button value="r" class="game-buttons btn btn-primary" disabled="true"><i class="fas fa-hand-rock"></i></button>
+                            <button value="p" class="game-buttons btn btn-primary" disabled="true"><i class="fas fa-hand-paper"></i></button>
+                            <button value="s" class="game-buttons btn btn-primary" disabled="true"><i class="fas fa-hand-scissors"></i></button>
                         </div>
-                        <button id="restart-button" class="btn btn-primary">Restart</button>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-              <div class="card card-default">
-                <div class="card-header">
-                  Chat
+
+            <div class="col-md-6">
+                <div class="card card-default">
+                    <div class="card-header">
+                        Chat
+                    </div>
+                    <div class="card-body">
+                        <div id="chat" class="align-text-bottom"></div>
+                        <div class="input-group mb-3 pt-1">
+                            <input type="text" id="msg-input" class="form-control" disabled="true"  aria-label="Recipient's username" aria-describedby="msg-button">
+                            <div class="input-group-append">
+                                <button id="msg-button" class="btn btn-primary" disabled="true" type="button">Send</button>
+                            </div>
+                        </div>                    
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div id="chat" class="overflow-auto"></div>
-                    <div class="input-group mb-3">
-                        <input type="text" id="msg-input" class="form-control"  aria-label="Recipient's username" aria-describedby="msg-button">
-                        <div class="input-group-append">
-                            <button id="msg-button" class="btn btn-outline-secondary" type="button">Send</button>
-                        </div>
-                    </div>                    
-                </div>
-              </div>
             </div>
-          </div>
-      
+    
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <footer class="text-center">&copy; Carolina Cavalcanti</footer>
+            </div>
+        </div>
+        
     </div>
+    
     
     
     <script src="assets/javascript/app.js"></script>

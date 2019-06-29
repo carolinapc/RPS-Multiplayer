@@ -1,3 +1,7 @@
+const ROCK = "<i class='fas fa-hand-rock'></i>";
+const PAPER = "<i class='fas fa-hand-paper'></i>";
+const SCISSORS = "<i class='fas fa-hand-scissors'></i>";
+
 const config = {
     apiKey: "AIzaSyCqlzF59M-WVvn_WTps9GqJ62_36QgmBZE",
     authDomain: "rps-game-5cb57.firebaseapp.com",
@@ -48,18 +52,32 @@ var $player1wins = $("#player1-wins");
 var $player2wins = $("#player2-wins");
 var $player1losses = $("#player1-losses");
 var $player2losses = $("#player2-losses");
-var $gameTies = $(".ties");
+var $gameTies = $("#ties");
 var $gameButtons = $(".game-buttons");
 var $gameResult = $("#game-result");
 var $msgInput = $("#msg-input");
 var $msgButton = $("#msg-button");
-var $restartButton = $("#restart-button");
 var $chat = $("#chat");
 
 
 function error (err) {
     console.log("Error!");
     console.log(err);
+}
+
+function getSymbol(s){
+    switch (s) {
+        case "r":
+            return ROCK;
+        case "p":
+            return PAPER;
+        case "s":
+            return SCISSORS;
+    
+        default:
+            return "-"
+    } 
+
 }
 
 connectedRef.on("value", function(snapshot){
@@ -88,19 +106,21 @@ function playerDisconnect(data){
         //reset gameKey
         connectionsRef.child(player).remove();
         
-        //alert the user
-        alert("The other player has disconnected! Please click on restart button and wait for another player.");
-        
-        //show restart button
-        $restartButton.css("display","block");
-        $gameButtons.css("display","none");
+        $gameButtons.css("disabled","true");
         $msgInput.attr("disabeld","true");
         $msgButton.attr("disabled","true");
 
         playerName == "player1";
         $player1.text("Player 1: YOU!");
-        $player2.text("Player 2: Waiting to connect...");
+        $player2.text("Player 2: Disconnected");
+        $gameResult.empty();
+        $gameResult.append("<p class='blink text-center'>Your opponent has disconnected! Please click on restart button and wait for a new player.</p>");
 
+        var restartButton = $("<button>");
+        restartButton.attr("class","btn btn-primary pt-1 text-center");
+        restartButton.click(restart);
+        restartButton.text("Restart");
+        $gameResult.append(restartButton);
     }
 }
 
@@ -127,7 +147,7 @@ function connectPlayers(snapshot){
 
             $player2.text("Player 2: YOU!");
             $playerName = "player2";
-            $gameButtons.css("display","block");
+            $gameButtons.removeAttr("disabled");
 
             $player1.text("Player 1: Your Opponent!");
         }
@@ -150,7 +170,9 @@ function connectPlayers(snapshot){
         if(gameKey != "waiting"){
     
             if(!started){
-                
+                $player1.removeClass("blink");
+                $player2.removeClass("blink");
+                $gameButtons.removeAttr("disabled");
                 //start listen the game score
                 gamesRef.child(gameKey+"/score").on("value", scoreChanges, error);
                 //start listen the game messages
@@ -203,8 +225,8 @@ function scoreChanges(snapshot) {
         if(player1.choice != "" && player2.choice != ""){
             $gameResult.empty();
             
-            $gameResult.append($("<p>").text(`Player 1 choose: ${player1.choice}`));
-            $gameResult.append($("<p>").text(`Player 2 choose: ${player2.choice}`));
+            $gameResult.append($("<p>").html(`Player 1 chose: ${getSymbol(player1.choice)}`));
+            $gameResult.append($("<p>").html(`Player 2 chose: ${getSymbol(player2.choice)}`));
     
             if (player1.choice === player2.choice) {
                 game.score.ties++;  
@@ -231,7 +253,7 @@ function scoreChanges(snapshot) {
             game.score.player1.choice = "";
             game.score.player2.choice = "";
     
-            $gameButtons.css("display","block");
+            $gameButtons.removeAttr("disabled");
             
             //updata database
             gamesRef.child(gameKey+"/score").set(game.score);
@@ -239,15 +261,15 @@ function scoreChanges(snapshot) {
         }
         else if(player1.choice != ""){
             $gameResult.empty();
-            $gameResult.append($("<p>").text("Waiting for the player 2 choosing..."));
+            $gameResult.append($("<p>").text("Waiting for player 2 to choose..."));
             if(playerName == "player2")
-                $gameButtons.css("display","block");
+                $gameButtons.removeAttr("disabled");
         }
         else if(player2.choice != ""){
             $gameResult.empty();
-            $gameResult.append($("<p>").text("Waiting for the player 1 choosing..."));
+            $gameResult.append($("<p>").text("Waiting for player 1 to choose..."));
             if(playerName == "player1")
-                $gameButtons.css("display","block");
+                $gameButtons.removeAttr("disabled");
         }
     }
 
@@ -271,13 +293,16 @@ function messagesChanges(data){
 
     $chat.append(newP);
     
+    //auto scroll
+    document.getElementById("chat").scrollTop = document.getElementById("chat").scrollHeight;
+    
 }
 
 function play(){
 
     var choice = $(this).val();
 
-    $gameButtons.css("display","none");
+    $gameButtons.attr("disabled","true");
 
     gamesRef.child(gameKey+"/score/"+playerName+"/choice").set(choice);
     
@@ -313,7 +338,7 @@ connectionsRef.once("value", connectPlayers, error);
 connectionsRef.on("child_removed", playerDisconnect, error);
 
 // When the player clicks on the button choice
-$gameButtons.on("click","button",play);
+$gameButtons.click(play);
 
 // When the player clicks on the button to send a messagem
 $msgButton.click(sendMessage);
@@ -325,7 +350,7 @@ $msgInput.keypress(event => {
     }
 });
 
-$restartButton.click(restart);
+
 
 
     
