@@ -22,21 +22,21 @@
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/113cd923d0.js"></script>    
 </head>
-<body>
+<body class="d-flex flex-column h-100">
+
+    <header class="shadow mb-4 border">
+        <h1 class="text-center">Rock Paper Scissors Game</h1>
+    </header>
+    
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center">Rock Paper Scissors Game</h1>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-6">
-                <div class="card card-default">
+                <div class="card card-default p-0">
                     <div class="card-header">
                         Score
                     </div>
-                    <div class="card-body score">
+                    <div class="card-body score p-2">
                         <table>
                             <tr>
                                 <th></th>
@@ -45,13 +45,13 @@
                                 <th>Ties</th>
                             </tr>
                             <tr>
-                                <td><span id="player1">Player 1: Waiting to connect...</span></td>
+                                <td><span id="player1">Player 1: Waiting...</span></td>
                                 <td><span id="player1-wins">0</span></td>
                                 <td><span id="player1-losses">0</span></td>
                                 <td rowspan="2"><span id="ties">0</span></td>
                             </tr>
                             <tr>
-                                <td><span id="player2" class="blink">Player 2: Waiting to connect...</span></td>
+                                <td><span id="player2" class="blink">Player 2: Waiting...</span></td>
                                 <td><span id="player2-wins">0</span></td>
                                 <td><span id="player2-losses">0</span></td>
                             </tr>
@@ -60,9 +60,8 @@
                 </div>
         
                 <div class="card card-default">
-                    <div class="card-header">Game</div>
                     <div class="card-body">
-                        <div id="game-result"></div>
+                        <div id="game-result">Waiting all players to connect...</div>
                         <div class="text-center pt-1">
                             <button value="r" class="game-buttons btn btn-primary" disabled="true"><i class="fas fa-hand-rock"></i></button>
                             <button value="p" class="game-buttons btn btn-primary" disabled="true"><i class="fas fa-hand-paper"></i></button>
@@ -90,15 +89,11 @@
             </div>
     
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <footer class="text-center">&copy; Carolina Cavalcanti</footer>
-            </div>
-        </div>
-        
     </div>
     
-    
+    <footer class="mt-auto mx-auto mt-4 py-1 border">
+        <span class="text-dark">&copy; Carolina Cavalcanti</span>
+    </footer>
     
     <script src="assets/javascript/app.js"></script>
 

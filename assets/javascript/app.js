@@ -113,8 +113,9 @@ function playerDisconnect(data){
         playerName == "player1";
         $player1.text("Player 1: YOU!");
         $player2.text("Player 2: Disconnected");
+        $player2.addClass("blink");
         $gameResult.empty();
-        $gameResult.append("<p class='blink text-center'>Your opponent has disconnected! Please click on restart button and wait for a new player.</p>");
+        $gameResult.append("<p class='text-center'>Your opponent has disconnected! Please click on restart button and wait for a new player.</p>");
 
         var restartButton = $("<button>");
         restartButton.attr("class","btn btn-primary pt-1 text-center");
@@ -172,6 +173,7 @@ function connectPlayers(snapshot){
             if(!started){
                 $player1.removeClass("blink");
                 $player2.removeClass("blink");
+                $gameResult.text("Make your choice!");
                 $gameButtons.removeAttr("disabled");
                 //start listen the game score
                 gamesRef.child(gameKey+"/score").on("value", scoreChanges, error);
@@ -183,11 +185,7 @@ function connectPlayers(snapshot){
         }
 
     });
-    
-    
 }
-
-
 
 function scoreChanges(snapshot) {
 
@@ -224,13 +222,23 @@ function scoreChanges(snapshot) {
         //if both players played
         if(player1.choice != "" && player2.choice != ""){
             $gameResult.empty();
+            var $divp1 = $("<div>");
+            var $divp2 = $("<div>");
+            var $textResult = $("<p>");
+
             
-            $gameResult.append($("<p>").html(`Player 1 chose: ${getSymbol(player1.choice)}`));
-            $gameResult.append($("<p>").html(`Player 2 chose: ${getSymbol(player2.choice)}`));
-    
+            $divp1.append(getSymbol(player1.choice));
+            $divp2.append(getSymbol(player2.choice));
+            
+            $divp1.append($("<p>").text("Player 1"));
+            $divp2.append($("<p>").text("Player 2"));
+
+
             if (player1.choice === player2.choice) {
                 game.score.ties++;  
-                $gameResult.append($("<p>").text("That's a tie!"));
+                $textResult.text("That's a tie! Play again!");
+                $divp1.addClass("text-primary");
+                $divp2.addClass("text-primary");
             } 
             else if ((player1.choice === "r" && player2.choice === "s") ||
                      (player1.choice === "s" && player2.choice === "p") || 
@@ -238,16 +246,22 @@ function scoreChanges(snapshot) {
     
                 game.score.player1.wins++;
                 game.score.player2.losses++;
-                $gameResult.append($("<p>").text("Player 1 WON!"));
+                $textResult.text("Player 1 WON! Play again!");
+                $divp1.addClass("text-primary");
     
             } else {
     
                 game.score.player2.wins++;
                 game.score.player2.losses++;
-                $gameResult.append($("<p>").text("Player 2 WON!"));
+                $textResult.text("Player 2 WON! Play again!");
+                $divp2.addClass("text-primary");
     
             }
-    
+
+            
+            $gameResult.append($divp1);
+            $gameResult.append($divp2);
+            $gameResult.append($textResult);
         
             //reset choices
             game.score.player1.choice = "";
