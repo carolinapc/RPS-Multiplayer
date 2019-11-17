@@ -1,4 +1,4 @@
-# RPS-Multiplayer
+# RPS Multiplayer Game
 
 Rock Paper Scissors Multiplayer Game with a chat available! 
 
@@ -17,3 +17,4 @@ The game will track each player's wins and losses.
 - Javascript
 - Firebase Real-time database
 - jQuery
+- Bootstrap
