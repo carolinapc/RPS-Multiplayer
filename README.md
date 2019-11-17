@@ -16,3 +16,4 @@ The game will track each player's wins and losses.
 
 - Javascript
 - Firebase Real-time database
+- jQuery
