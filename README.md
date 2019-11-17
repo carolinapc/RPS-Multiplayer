@@ -9,3 +9,10 @@ Both players pick either rock, paper or scissors. After the players make their s
 The game will track each player's wins and losses.
 
 [Play the Game!](https://carolinapc.github.io/RPS-Multiplayer/)
+
+![preview](https://carolinapc.github.io/assets/images/rpsmultiplayergame.png)
+
+## Technologies Used
+
+- Javascript
+- Firebase
