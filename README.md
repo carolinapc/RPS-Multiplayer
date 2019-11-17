@@ -15,4 +15,4 @@ The game will track each player's wins and losses.
 ## Technologies Used
 
 - Javascript
-- Firebase
+- Firebase Real-time database
